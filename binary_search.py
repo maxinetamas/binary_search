@@ -81,7 +81,7 @@ def count_repeats(xs, x):
             else:
                 lo = mid + 1
         return lo
-    left = binary_search_left(xs, x, 0, len(xs) - 1)    
+    left = binary_search_left(xs, x, 0, len(xs) - 1)
     if left == len(xs) - 1:
         return 0
     right = binary_search_right(xs, x, left, len(xs) - 1)
