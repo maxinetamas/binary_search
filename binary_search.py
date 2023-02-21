@@ -73,6 +73,7 @@ def count_repeats(xs, x):
             else:
                 hi = mid
         return lo
+    
     def binary_search_right(xs, x, lo, hi):
         while lo <= hi:
             mid = (lo + hi) // 2
