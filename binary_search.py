@@ -27,7 +27,7 @@ def find_smallest_positive(xs):
     >>> find_smallest_positive([-3, -2, -1]) is None
     True
     '''
-    if len(xs) == 0:
+    if len(xs) == 1:
         return None
     if xs[-1] > 0:
         if xs[-2] <= 0:
