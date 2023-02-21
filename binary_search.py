@@ -36,7 +36,6 @@ def find_smallest_positive(xs):
             return mid
         else:
             hi = mid - 1
-    return
 
 
 def count_repeats(xs, x):
