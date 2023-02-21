@@ -27,17 +27,16 @@ def find_smallest_positive(xs):
     >>> find_smallest_positive([-3, -2, -1]) is None
     True
     '''
-    if len(xs) == 0:
-        return None
-    elif xs[0] > 0:
-        return 0
-    elif xs[-1] > 0:
-        if xs[-2] <= 0:
-            return len(xs) - 1
+    lo, hi = 0, len(xs) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if xs[mid] <= 0:
+            lo = mid + 1
+        elif mid == 0 or xs[mid-1] <= 0:
+            return mid
         else:
-            return find_smallest_positive(xs[:-1])
-    else:
-        return find_smallest_positive(xs[:-1])
+            hi = mid - 1
+    return 
 
 
 def count_repeats(xs, x):
@@ -64,18 +63,29 @@ def count_repeats(xs, x):
     >>> count_repeats([3, 2, 1], 4)
     0
     '''
-    if xs[0] > x:
-        return count_repeats(xs[1:], x)
-    elif xs[0] < x:
-        return 0
-    else:
-        if xs[-1] > x:
-            return 0
-        if xs[-1] < x:
-            return count_repeats(xs[:-1], x)
-        else:
-            return len(xs)
-    return None
+    def binary_search_left(xs, x, lo, hi):
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if xs[lo] == xs[hi]:
+                return 0
+            if xs[mid] > x:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo if xs[lo] == x else 0
+
+    def binary_search_right(xs, x, lo, hi):
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if xs[mid] < x:
+                hi = mid
+            else:
+                lo = mid + 1
+        return lo
+
+    left = binary_search_left(xs, x, 0, len(xs) - 1)
+    right = binary_search_right(xs, x, left, len(xs) - 1)
+    return right - left
 
 
 def argmin(f, lo, hi, epsilon=1e-3):
