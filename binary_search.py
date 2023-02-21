@@ -71,6 +71,7 @@ def count_repeats(xs, x):
             return count_repeats(xs[:-1], x)
         else:
             return len(xs)
+    return None
 
 
 def argmin(f, lo, hi, epsilon=1e-3):
