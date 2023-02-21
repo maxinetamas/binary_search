@@ -73,7 +73,6 @@ def count_repeats(xs, x):
             else:
                 hi = mid
         return lo
-
     def binary_search_right(xs, x, lo, hi):
         while lo <= hi:
             mid = (lo + hi) // 2
@@ -82,7 +81,6 @@ def count_repeats(xs, x):
             else:
                 lo = mid + 1
         return lo
-
     left = binary_search_left(xs, x, 0, len(xs) - 1)
     if left == len(xs) - 1:
         return 0
@@ -123,7 +121,14 @@ def argmin(f, lo, hi, epsilon=1e-3):
     >>> argmin(lambda x: (x-5)**2, -20, 0)
     -0.00016935087808430278
     '''
-    return 3
+    if hi - lo < epsilon:
+        return (hi + lo) / 2
+    m1 = lo + (hi - lo) / 3
+    m2 = hi - (hi - lo) / 3
+    if f(m1) < f(m2):
+        return argmin(f, lo, m2, epsilon)
+    else:
+        return argmin(f, m1, hi, epsilon)
 
 ################################################################################
 # the functions below are extra credit
