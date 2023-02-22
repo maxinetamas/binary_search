@@ -63,29 +63,40 @@ def count_repeats(xs, x):
     0
     '''
     def binary_search_left(xs, x, lo, hi):
-        while lo < hi:
+        while lo <= hi:
             mid = (lo + hi) // 2
-            if (xs[lo] == xs[hi]) and (xs[lo] == x):
-                return lo
-            if xs[mid] > x:
-                lo = mid + 1
+            if xs[mid] == x:
+                if mid == len(xs) - 1 or xs[mid + 1] != x:
+                    return mid
+                else:
+                    lo = mid + 1
+            if xs[mid] < x:
+                hi = mid - 1
             else:
-                hi = mid
-        return lo
+                lo = mid + 1
+        return -1
 
     def binary_search_right(xs, x, lo, hi):
         while lo <= hi:
             mid = (lo + hi) // 2
+            if xs[mid] == x:
+                if mid == 0 or xs[mid - 1] != x:
+                    return mid
+                else:
+                    hi = mid - 1
             if xs[mid] < x:
-                hi = mid
-            else:
+                hi = mid - 1
+            if xs[mid] > x:
                 lo = mid + 1
-        return lo
+        return -1
+    
     left = binary_search_left(xs, x, 0, len(xs) - 1)
-    if left == len(xs) - 1:
+    if left == -1:
         return 0
-    right = binary_search_right(xs, x, left, len(xs) - 1)
-    return right - left
+    right = binary_search_right(xs, x, 0, len(xs) - 1)
+    if right == -1 or x not in xs:
+        return 0
+    return left - right + 1
 
 
 def argmin(f, lo, hi, epsilon=1e-3):
